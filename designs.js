@@ -2,6 +2,8 @@
 // Select size input
 let color = document.getElementById("colorPicker");
 let canvas = document.getElementById("pixelCanvas");
+let gridHeight = document.getElementById("inputHeight");
+let gridWidth = document.getElementById("inputWidth");
 
 let draw = false;
 let isColoring = false;
@@ -9,19 +11,28 @@ let isColoring = false;
 const form = document.getElementById("sizePicker");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
-  let gridHeight = document.getElementById("inputHeight").value;
-  let gridWidth = document.getElementById("inputWidth").value;
-  
+  let height = gridHeight.value;
+  let width = gridWidth.value;
+
   draw = true;
 
-  makeGrid(gridHeight, gridWidth);
+  /**
+   * @desc creates a grid of squares
+   * @param {integer} width - number of squares representing the width of the grid
+   * @param {integer} height - number of squares representing the height of the grid
+   */
+
+  makeGrid(height, width);
 });
 
 function makeGrid(x, y) {
   // Your code goes here!
+  let table = document.getElementById('pixelCanvas');;
   let tr = document.getElementsByTagName("tr");
+  
+  // clears old grid
   if (tr.length > 0) {
-    tr[0].remove();
+    table.innerHTML = "";
   }
 
   let row;
@@ -33,7 +44,7 @@ function makeGrid(x, y) {
       cell = row.insertCell(j);
     }
   }
-
+  
   // drag or click to color
   canvas.addEventListener("mousedown", (e) => {
     if (draw && e.button === 0) {
